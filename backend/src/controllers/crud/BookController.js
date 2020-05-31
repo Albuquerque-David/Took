@@ -3,7 +3,7 @@
 
 
 var mongoose = require("mongoose")
-var { BookSchema } = require("../domain/Book")
+var { BookSchema } = require("../../domain/Book")
 const uuidModule = require('uuid')
 
 var Book = mongoose.model('Books', BookSchema)

@@ -2,21 +2,26 @@
 //TODO: TRATAMENTO DE PERMISSÕES PRA FAZER AS MUDANÇAS
 
 
-var mongoose = require("mongoose")
-var { UserSchema } = require("../domain/User")
+const mongoose = require("mongoose")
+const { UserSchema } = require("../../domain/User")
 const uuidModule = require('uuid')
 
 var User = mongoose.model('Users', UserSchema)
 
 var create = async (request, response) => 
 {
-    var { name, age, email } = request.body;
+    var { name, age, email, password } = request.body;
+
+    const { hashPassword } = require("../auth/AuthController")
+    password = await hashPassword(password)
+    
     var uuid = uuidModule.v4();
     var newUser = new User({
         uuid,
         name,
         age,
-        email
+        email,
+        password
     })
 
     newUser.save((error) => 
@@ -82,8 +87,6 @@ var readAll = async (request, response) =>
 
 var delet = async (request, response) =>
 {
-    console.log("aaaa")
-
     var { id } = request.params
 
     User.findByIdAndDelete(id).exec((error, result) => 
