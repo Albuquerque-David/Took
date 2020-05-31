@@ -3,29 +3,30 @@
 
 
 var mongoose = require("mongoose")
-var { BookSchema } = require("../models/Book")
+var { UserSchema } = require("../domain/User")
 const uuidModule = require('uuid')
 
-var Book = mongoose.model('Books', BookSchema)
+var User = mongoose.model('Users', UserSchema)
 
 var create = async (request, response) => 
 {
-    var { name, description } = request.body;
+    var { name, age, email } = request.body;
     var uuid = uuidModule.v4();
-    var newBook = new Book({
+    var newUser = new User({
         uuid,
         name,
-        description
+        age,
+        email
     })
 
-    newBook.save((error) => 
+    newUser.save((error) => 
         {
             if(error)
                 console.log("Create error.")
             else
             {
-                console.log("Sucessfully created new book.")
-                response.json({ newBook })
+                console.log("Sucessfully created new user.")
+                response.json({ newUser })
             }
         }
     )
@@ -33,12 +34,12 @@ var create = async (request, response) =>
 
 var update = async (request, response) => 
 {
-    var { id, name, description } = request.body
+    var { id, name, age, email } = request.body
 
     const filter = { '_id': id }
-    const update = { name , description}
+    const update = { name , age, email}
 
-    Book.findOneAndUpdate(filter,update, {new: true}).exec((error, result) =>
+    User.findOneAndUpdate(filter,update, {new: true}).exec((error, result) =>
     {
         if(error)
             console.log(error)
@@ -53,23 +54,7 @@ var update = async (request, response) =>
 var readById = async (request,response) => 
 {
     var { id } = request.query
-    Book.findById(id).exec((error,result) =>
-    {
-        if(error)
-            console.log(error)
-        else
-        {
-            console.log(result)
-            response.json({ result })
-        }
-    })
-}
-
-var searchByName = async (request, response) =>
-{
-    var { name } = request.query
-
-    Book.find({'name': name}).exec((error, result) => 
+    User.findById(id).exec((error,result) =>
     {
         if(error)
             console.log(error)
@@ -83,7 +68,7 @@ var searchByName = async (request, response) =>
 
 var readAll = async (request, response) =>
 {
-    Book.find({}).exec((error, result) => 
+    User.find({}).exec((error, result) => 
     {
         if(error)
             console.log(error)
@@ -97,9 +82,11 @@ var readAll = async (request, response) =>
 
 var delet = async (request, response) =>
 {
+    console.log("aaaa")
+
     var { id } = request.params
 
-    Book.findByIdAndDelete(id).exec((error, result) => 
+    User.findByIdAndDelete(id).exec((error, result) => 
     {
         if(error)
             console.log(error)
@@ -111,4 +98,4 @@ var delet = async (request, response) =>
     })
 }
 
-module.exports = {create,update,readById,searchByName,readAll,delet}
+module.exports = {create,update,readById,readAll,delet}

@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = require('./routes');
-const mongoConnect = require('./src/database/connection');
+const mongoConnect = require('./src/connection');
 
 const app = express();
 
