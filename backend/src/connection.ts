@@ -1,4 +1,4 @@
-const mongoose = require ("mongoose"); // The reason for this demo.
+const mongoose = require ("mongoose");
 
 const database = process.env.DATABASE || 'took';
 
@@ -13,7 +13,7 @@ var connect = async () =>
 {
     // Makes connection asynchronously.  Mongoose will queue up database
     // operations and release them when the connection is complete.
-    await mongoose.connect(uristring, function (err, res) {
+    await mongoose.connect(uristring, function (err: any) {
       if (err) {
       console.log ('ERROR connecting to: ' + uristring + '. ' + err);
       } else {
@@ -23,6 +23,5 @@ var connect = async () =>
 }
 
 module.exports = { connect }
-
 
 

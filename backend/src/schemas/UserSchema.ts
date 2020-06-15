@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 var UserSchema = new mongoose.Schema
 ({
@@ -9,4 +9,4 @@ var UserSchema = new mongoose.Schema
     password: { type: String, required: true}
 });
 
-module.exports = {UserSchema};
+export default UserSchema;

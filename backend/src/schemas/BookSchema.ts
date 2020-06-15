@@ -1,4 +1,4 @@
-var mongoose = require('mongoose')
+import mongoose from 'mongoose'
 
 var BookSchema = new mongoose.Schema
 ({
@@ -7,4 +7,4 @@ var BookSchema = new mongoose.Schema
     description: { type: String, required: true }
 });
 
-module.exports = {BookSchema};
+export default BookSchema;
